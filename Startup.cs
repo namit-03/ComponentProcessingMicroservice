@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Microsoft.EntityFrameworkCore;
+using ComponentProcessingMicroservice.Models;
 namespace ComponentProcessingMicroservice
 {
     public class Startup
@@ -24,6 +26,9 @@ namespace ComponentProcessingMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration.GetConnectionString("ReturnOrder");
+            services.AddDbContextPool<ReturnOrderContext>(options => options.UseSqlServer(connection));
+
             services.AddControllers();
         }
 
